@@ -1,0 +1,133 @@
+syntax = "proto3";
+
+enum e_table_position {
+	NONE = 0;
+	BTN = 1;
+	SB = 2;
+	BB = 3;
+	UTG = 4;
+	CO = 5;
+	HJ = 6;	
+	LJ = 7;
+	UTG1 = 8;
+	UTG2 = 9;
+	UTG3 = 10;
+}
+
+enum e_table_state {
+	waiting = 0;	
+	ready = 1;
+	blind = 2;
+	preflop = 3;
+	flop = 4;
+	turn = 5;
+	river = 6;
+	showdown = 7;
+}
+
+enum e_table_speed {
+	NONE = 0;
+	SLOW = 30;
+	NORMAL = 20;
+	FAST = 10;
+	RAPIDLY = 5;
+	GOD = 1;
+}
+
+enum e_actor_state {
+	SIT_OUT = 0;
+	READY = 1;
+	FOLD = 2;
+	ACTIVE = 3;
+}
+
+enum e_game_type {
+	NONE = 0;
+	HOLDEM = 1;
+	OMAHA = 2;
+}
+
+enum e_type_of_play {
+	NONE = 0;
+	CASH = 1;
+	TOURNAMENT = 2;
+}
+
+enum e_actor_type {
+	NONE = 0;
+	HERO = 1;
+	OPPONENT = 2;
+}
+
+enum e_action_type {
+	FOLD = 0;
+	CHECK = 1;
+	CALL = 2;
+	BET = 3;
+	RAISE = 4;
+}
+
+message p_table {
+	uint32 id = 1;
+	e_game_type game_type = 2;
+	e_type_of_play type_of_play = 3;
+	uint32 total_seats = 4;
+	e_table_speed speed = 5;
+	uint32 sb = 6;
+	uint32 bb = 7;
+	uint32 ante = 8;
+	uint32 min_buy_in = 9;
+	uint32 max_buy_in = 10;
+	repeated p_seat seats = 11;
+	repeated string community_cards = 12;
+	uint32 total_pot = 13;
+	uint32 current_pot = 14;
+	repeated p_side_pot side_pot = 15;
+	p_active_seat active_seat = 16;
+	e_table_state state = 17;
+
+}
+
+message p_seat {
+	uint32 id = 1;
+	e_actor_type type = 2;
+	p_actor actor = 3;
+}
+
+message p_actor {
+	uint32 id = 1;
+	string name = 2;
+	e_actor_state state = 3;
+	e_table_position position = 4;
+	uint32 chips = 5;
+	uint32 total_bet = 6;
+	uint32 round_bet = 7;
+	repeated string hands = 8;
+}
+
+message p_active_seat {
+	uint32 id = 1;
+	uint32 remain_sec = 2;
+}
+
+message p_side_pot {
+	uint32 id = 1;
+	uint32 pot = 2;
+}
+
+message p_seat_hand {
+	uint32 seat_id = 1;
+	repeated string cards = 2;
+}
+
+message p_seat_state {
+	uint32 seat_id = 1;
+	e_actor_state state = 2;
+}
+
+message p_win_pot {
+	uint32 seat_id = 1;
+	uint32 pot = 2;
+	repeated uint32 pot_ids = 3;
+	uint32 chips = 4;
+}

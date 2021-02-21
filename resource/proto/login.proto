@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+message m_1001_tos {
+    uint32 id = 1;
+}
+message m_1001_toc {
+	uint32 flag = 1;
+}
+

@@ -1,0 +1,166 @@
+syntax = "proto3";
+
+import "table.proto";
+
+// enter table
+message m_2000_tos {
+    uint32 table_id = 1;
+}
+message m_2000_toc {
+	p_table info = 1;
+}
+
+// leave table
+message m_2001_tos {}
+message m_2001_toc {
+	uint32 seat_id = 1;
+}
+
+// sit down table
+message m_2002_tos {
+    uint32 table_id = 1;
+    uint32 seat_id = 2;
+}
+message m_2002_toc {
+    p_seat seat = 1;
+}
+
+// ready
+message m_2003_tos {
+    uint32 table_id = 1;
+}
+message m_2003_toc {
+  uint32 seat_id = 1;
+}
+
+// sit out
+message m_2004_tos {
+    uint32 table_id = 1;
+}
+message m_2004_toc {
+  uint32 seat_id = 1;
+}
+
+// ---------------------------------------------------------------
+// p
+// ---------------------------------------------------------------
+message p_seat_chips {
+    uint32 seat_id = 1;
+    uint32 chips = 2;
+    uint32 actor_chips = 3;
+}
+
+// ---------------------------------------------------------------
+// actions
+// ---------------------------------------------------------------
+
+// actor_active
+message m_2010_toc {
+    uint32 seat_id = 1;
+}
+
+// fold
+message m_2011_tos {
+    uint32 table_id = 1;
+}
+// message m_2011_toc {
+//     uint32 seat_id = 1;
+// }
+
+// check / call
+message m_2012_tos {
+    uint32 table_id = 1;
+}
+// message m_2012_toc {
+//     uint32 seat_id = 1;
+// }
+
+// bet / raise
+message m_2013_tos {
+    uint32 table_id = 1;
+    uint32 chips = 2;
+}
+// message m_2013_toc {
+//     p_seat_chips info = 1;
+//     uint32 total_pot = 2;
+// }
+
+// 
+// message m_2014_tos {
+//     uint32 chips = 1;
+// }
+// message m_2014_toc {
+//     p_seat_chips info = 1;
+//     uint32 total_pot = 2;
+// }
+
+// ---------------------------------------------------------------
+// server push msg(no tos)
+// ---------------------------------------------------------------
+
+// flop cards
+message m_2021_toc {
+    repeated string cards = 1;
+}
+
+// turn or river card
+message m_2022_toc {
+    string card = 1;
+}
+
+// end of round
+message m_2023_toc {
+    uint32 current_pot = 1;
+    repeated p_side_pot side_pot = 2;
+    repeated p_seat_chips seats_chips = 3;
+}
+
+// put blind
+message m_2024_toc {
+    repeated p_seat_chips seats_chips = 1;
+    uint32 total_pot = 2;
+    uint32 current_pot = 3;
+}
+
+// show hands
+message m_2025_toc {
+    repeated p_seat_hand hands = 1;
+}
+
+// win pot
+message m_2026_toc {
+    repeated p_win_pot seats = 1;
+} 
+
+// opponent sit down
+message m_2027_toc {
+    p_seat seat = 1;
+}
+
+// seat state
+message m_2028_toc {
+    p_seat_state seat_state = 1;
+}
+
+// action result
+message m_2029_toc {
+    uint32 seat_id = 1;
+    e_action_type action_type = 2;
+    uint32 chips = 3;
+    uint32 pot = 4;
+    uint32 total_pot = 5;
+    uint32 current_pot = 6;
+}
+
+// ---------------------------------------------------------------
+// server push msg(no tos)  table_state
+// ---------------------------------------------------------------
+
+// ready
+message m_2030_toc {
+    repeated p_seat seats = 1;
+    uint32 total_pot = 2;    
+    uint32 current_pot = 3;
+    repeated p_side_pot side_pot = 4;
+}
+
