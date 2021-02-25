@@ -35,8 +35,21 @@ end_of_round(Data) ->
     end.
 
 check_showdown(Data) ->
-    #table_data{action_seats = ActionSeats} = Data,
-    length(ActionSeats) =< 1.
+    #table_data{
+        action_seats = ActionSeats,
+        community_cards = ConmunityCards
+    } = Data,
+    case length(ActionSeats) =< 1 of
+        true ->
+            case length(ConmunityCards) of
+                5 ->
+                    false;
+                _ ->
+                    true
+            end;
+        false ->
+            false
+    end.
 
 %% -------------------------------------------------------------------
 
