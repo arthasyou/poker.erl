@@ -239,11 +239,11 @@ straight_flush_evaluate(SuitCounter, RankCounter) ->
 get_rank_of_suit(SuitCounter, RankCounter) ->
     {_, Ranks} = SuitCounter,
     lists:foldl(fun(X, Acc) ->
-        case lists:keyfind(X, 1, RankCounter) of
-            Item ->
-                [Item | Acc];
+        case lists:keyfind(X, 1, RankCounter) of            
             false ->
-                Acc
+                Acc;
+            Item ->
+                [Item | Acc]
         end
     end, [], Ranks).
 
